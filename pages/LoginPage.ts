@@ -1,10 +1,12 @@
 import { type Page, type Locator } from '@playwright/test';
+import { Fonction } from '../utils/fonction';
 
 export class LoginPage {
   readonly page: Page;
   readonly usernameInput: Locator;
   readonly passwordInput: Locator;
   readonly loginButton: Locator;
+  private readonly fonction = new Fonction();
 
   constructor(page: Page) {
     this.page = page;
@@ -18,8 +20,8 @@ export class LoginPage {
   }
 
   async login(username: string, password: string) {
-    await this.usernameInput.fill(username);
-    await this.passwordInput.fill(password);
-    await this.loginButton.click();
+    await this.fonction.typeText(this.usernameInput, username, 'champ utilisateur');
+    await this.fonction.typeText(this.passwordInput, password, 'champ mot de passe');
+    await this.fonction.waitAndClick(this.loginButton, 'bouton Login');
   }
 }
